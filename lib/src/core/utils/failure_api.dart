@@ -1,4 +1,4 @@
-import 'package:covid_tracker/src/core/error/failures.dart';
+import '../error/failures.dart';
 
 const String SERVER_FAILURE_MESSAGE = 'Server Failure';
 const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
