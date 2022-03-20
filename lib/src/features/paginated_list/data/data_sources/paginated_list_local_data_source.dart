@@ -8,14 +8,14 @@ abstract class PaginatedListLocalDataSource {
   /// the user had an internet connection.
   ///
   /// Throws [CacheException] if no cached data is present.
-  Future<List<UserModel>> getLastRandomUsers();
+  Future<List<UserModel>> getLastResultsPage();
 
   /// Add in the cache the list of  [UserModel]
   ///
-  Future<void> cacheRandomUsers(List<UserModel> randomUsersToCache);
+  Future<void> cacheNextResultsPage(List<UserModel> resultsPageToCache);
 }
 
-const CACHED_RANDOM_USERS = 'CACHED_RANDOM_USERS';
+const CACHED_RESULTS_PAGE = 'CACHED_RESULTS_PAGE';
 
 class PaginatedListLocalDataSourceImpl implements PaginatedListLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -23,12 +23,12 @@ class PaginatedListLocalDataSourceImpl implements PaginatedListLocalDataSource {
   PaginatedListLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<List<UserModel>> getLastRandomUsers() {
-    final jsonRandomUsers =
-        sharedPreferences.getStringList(CACHED_RANDOM_USERS);
-    if (jsonRandomUsers != null) {
-      return Future.value(jsonRandomUsers
-          .map((randomUser) => UserModel.fromJson(jsonDecode(randomUser)))
+  Future<List<UserModel>> getLastResultsPage() {
+    final jsonResultsPage =
+        sharedPreferences.getStringList(CACHED_RESULTS_PAGE);
+    if (jsonResultsPage != null) {
+      return Future.value(jsonResultsPage
+          .map((resultsPage) => UserModel.fromJson(jsonDecode(resultsPage)))
           .toList());
     } else {
       throw CacheException();
@@ -36,14 +36,14 @@ class PaginatedListLocalDataSourceImpl implements PaginatedListLocalDataSource {
   }
 
   @override
-  Future<void> cacheRandomUsers(List<UserModel> randomUsersToCache) {
-    List<String> randomUsersEncoded = randomUsersToCache
-        .map((randomUser) => jsonEncode(randomUser.toJson()))
+  Future<void> cacheNextResultsPage(List<UserModel> resultsPageToCache) {
+    List<String> resultsPageEncoded = resultsPageToCache
+        .map((resultsPage) => jsonEncode(resultsPage.toJson()))
         .toList();
 
     return sharedPreferences.setStringList(
-      CACHED_RANDOM_USERS,
-      randomUsersEncoded,
+      CACHED_RESULTS_PAGE,
+      resultsPageEncoded,
     );
   }
 }

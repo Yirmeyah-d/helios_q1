@@ -15,12 +15,12 @@ class PaginatedListLoading extends PaginatedListState {
 }
 
 class PaginatedListLoaded extends PaginatedListState {
-  final List<User> randomUsers;
+  final List<User> nextResultsPage;
 
-  const PaginatedListLoaded({required this.randomUsers});
+  const PaginatedListLoaded({required this.nextResultsPage});
 
   @override
-  List<Object> get props => [randomUsers];
+  List<Object> get props => [nextResultsPage];
 }
 
 class PaginatedListError extends PaginatedListState {

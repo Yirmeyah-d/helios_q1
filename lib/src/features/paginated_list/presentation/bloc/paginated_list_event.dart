@@ -4,14 +4,9 @@ abstract class PaginatedListEvent extends Equatable {
   const PaginatedListEvent();
 }
 
-class GetRandomUsersEvent extends PaginatedListEvent {
-  const GetRandomUsersEvent();
+class FetchNextResultsPageEvent extends PaginatedListEvent {
+  const FetchNextResultsPageEvent();
 
   @override
   List<Object> get props => [];
-}
-
-class GetCountryListEvent extends PaginatedListEvent {
-  @override
-  List<Object?> get props => [];
 }

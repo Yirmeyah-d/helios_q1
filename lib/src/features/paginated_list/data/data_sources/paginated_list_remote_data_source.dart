@@ -1,13 +1,12 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:helios_q1/src/features/paginated_list/data/models/user_model.dart';
 import '../../../../core/error/exceptions.dart';
 
 abstract class PaginatedListRemoteDataSource {
-  /// Calls the https://randomuser.me/api/?results=500 endpoint.
+  /// Calls the https://randomuser.me/api/?page=1&results=20&seed=abc endpoint.
   ///
   /// Throws a [ServerException] for all error codes.
-  Future<List<UserModel>> getRandomUsers();
+  Future<List<UserModel>> fetchNextResultsPage(int page);
 }
 
 class PaginatedListRemoteDataSourceImpl
@@ -17,14 +16,15 @@ class PaginatedListRemoteDataSourceImpl
   PaginatedListRemoteDataSourceImpl({required this.dio});
 
   @override
-  Future<List<UserModel>> getRandomUsers() async =>
-      _getRandomUsersFromUrl('https://randomuser.me/api/?results=500');
+  Future<List<UserModel>> fetchNextResultsPage(int page) async =>
+      _fetchNextResultsPageFromUrl(
+          'https://randomuser.me/api/?page=$page&results=20&seed=abc');
 
-  Future<List<UserModel>> _getRandomUsersFromUrl(String url) async {
+  Future<List<UserModel>> _fetchNextResultsPageFromUrl(String url) async {
     final response = await dio.get(url);
     if (response.statusCode == 200) {
-      return (jsonDecode(response.data) as List)
-          .map((randomUser) => UserModel.fromJson(randomUser))
+      return (response.data["results"] as List)
+          .map((nextResultsPage) => UserModel.fromJson(nextResultsPage))
           .toList();
     } else {
       throw ServerException();

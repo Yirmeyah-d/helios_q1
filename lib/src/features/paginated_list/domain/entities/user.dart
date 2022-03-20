@@ -1,35 +1,33 @@
 import 'package:equatable/equatable.dart';
+import 'dob.dart';
+import 'location.dart';
+import 'name.dart';
+import 'picture.dart';
 
 class User extends Equatable {
-  final String firstName;
-  final String lastName;
-  final int age;
+  final Name name;
+  final Dob dob;
   final String email;
   final String phoneNumber;
-  final String city;
-  final String street;
-  final String postCode;
+  final Picture profilePicture;
+  final Location location;
 
   const User({
-    required this.firstName,
-    required this.lastName,
-    required this.age,
+    required this.name,
+    required this.dob,
     required this.email,
     required this.phoneNumber,
-    required this.city,
-    required this.street,
-    required this.postCode,
+    required this.profilePicture,
+    required this.location,
   });
 
   @override
   List<Object> get props => [
-        firstName,
-        lastName,
+        name,
+        dob,
         email,
         phoneNumber,
-        city,
-        street,
-        postCode,
-        age,
+        profilePicture,
+        location,
       ];
 }

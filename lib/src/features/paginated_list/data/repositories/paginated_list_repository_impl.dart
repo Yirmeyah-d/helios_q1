@@ -1,6 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:helios_q1/src/features/paginated_list/data/data_sources/paginated_list_local_data_source.dart';
 import 'package:helios_q1/src/features/paginated_list/data/data_sources/paginated_list_remote_data_source.dart';
+import 'package:helios_q1/src/features/paginated_list/data/models/user_model.dart';
 import 'package:helios_q1/src/features/paginated_list/domain/entities/user.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
@@ -18,20 +19,24 @@ class PaginatedListRepositoryImpl implements PaginatedListRepository {
     required this.networkInfo,
   });
 
+  List<UserModel> resultsPage = <UserModel>[];
+
   @override
-  Future<Either<Failure, List<User>>> getRandomUsers() async {
+  Future<Either<Failure, List<User>>> fetchNextResultsPage(int page) async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteRandomUsers = await remoteDataSource.getRandomUsers();
-        localDataSource.cacheRandomUsers(remoteRandomUsers);
-        return Right(remoteRandomUsers);
+        final remoteNextResultsPage =
+            await remoteDataSource.fetchNextResultsPage(page);
+        resultsPage.addAll(remoteNextResultsPage);
+        localDataSource.cacheNextResultsPage(resultsPage);
+        return Right(remoteNextResultsPage);
       } on ServerException {
         return Left(ServerFailure());
       }
     } else {
       try {
-        final localRandomUsers = await localDataSource.getLastRandomUsers();
-        return Right(localRandomUsers);
+        final localLastResultsPage = await localDataSource.getLastResultsPage();
+        return Right(localLastResultsPage);
       } on CacheException {
         return Left(CacheFailure());
       }

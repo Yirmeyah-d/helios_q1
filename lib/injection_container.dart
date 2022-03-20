@@ -5,7 +5,7 @@ import 'package:helios_q1/src/features/paginated_list/data/data_sources/paginate
 import 'package:helios_q1/src/features/paginated_list/data/data_sources/paginated_list_remote_data_source.dart';
 import 'package:helios_q1/src/features/paginated_list/data/repositories/paginated_list_repository_impl.dart';
 import 'package:helios_q1/src/features/paginated_list/domain/repositories/paginated_list_repository.dart';
-import 'package:helios_q1/src/features/paginated_list/domain/use_cases/get_random_users.dart';
+import 'package:helios_q1/src/features/paginated_list/domain/use_cases/fetch_next_result_page.dart';
 import 'package:helios_q1/src/features/paginated_list/presentation/bloc/paginated_list_bloc.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,11 +18,13 @@ Future<void> init() async {
   //Bloc
   serviceLocator.registerFactory(
     () => PaginatedListBloc(
-      getRandomUsers: serviceLocator(),
+      networkInfo: serviceLocator(),
+      fetchNextResultsPage: serviceLocator(),
     ),
   );
   // Use cases
-  serviceLocator.registerLazySingleton(() => GetRandomUsers(serviceLocator()));
+  serviceLocator
+      .registerLazySingleton(() => FetchNextResultsPage(serviceLocator()));
 
   // Repository
   serviceLocator.registerLazySingleton<PaginatedListRepository>(

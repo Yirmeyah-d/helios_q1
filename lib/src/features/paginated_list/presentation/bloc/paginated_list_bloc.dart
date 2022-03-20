@@ -3,48 +3,61 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:helios_q1/src/core/utils/failure_api.dart';
 import 'package:helios_q1/src/features/paginated_list/domain/entities/user.dart';
-import 'package:helios_q1/src/features/paginated_list/domain/use_cases/get_random_users.dart';
-
+import 'package:helios_q1/src/features/paginated_list/domain/use_cases/fetch_next_result_page.dart';
 import '../../../../core/error/failures.dart';
-import '../../../../core/use_case/use_case.dart';
+import '../../../../core/network/network_info.dart';
 part 'paginated_list_state.dart';
 part 'paginated_list_event.dart';
 
 class PaginatedListBloc extends Bloc<PaginatedListEvent, PaginatedListState> {
-  final GetRandomUsers getRandomUsers;
+  final FetchNextResultsPage fetchNextResultsPage;
+  final NetworkInfo networkInfo;
+
+  int page = 1;
+  List<User> resultsPage = <User>[];
 
   PaginatedListBloc({
-    required this.getRandomUsers,
+    required this.networkInfo,
+    required this.fetchNextResultsPage,
   }) : super(PaginatedListInitial()) {
-    on<GetRandomUsersEvent>(_onGetRandomUsers);
+    on<FetchNextResultsPageEvent>(_onFetchNextResultsPageEvent);
   }
 
-  void _eitherLoadedAfterGetRandomUsersOrErrorState(
-    Either<Failure, List<User>> failureOrRandomUsers,
+  Future<void> _eitherLoadedStateAfterFetchNextResultsPageOrErrorState(
+    Either<Failure, List<User>> failureOrNextResultsPage,
     Emitter<PaginatedListState> emit,
-  ) {
-    failureOrRandomUsers.fold(
-      (failure) => emit(
+  ) async {
+    await failureOrNextResultsPage.fold(
+      (failure) async => emit(
         PaginatedListError(
           message: failure.mapFailureToMessage,
         ),
       ),
-      (randomUsers) => emit(
-        PaginatedListLoaded(
-          randomUsers: randomUsers,
-        ),
-      ),
+      (nextResultsPage) async {
+        if (await networkInfo.isConnected) {
+          resultsPage.addAll(nextResultsPage);
+          page++;
+        } else {
+          resultsPage = nextResultsPage;
+        }
+        emit(
+          PaginatedListLoaded(
+            nextResultsPage: resultsPage,
+          ),
+        );
+      },
     );
   }
 
-  Future<void> _onGetRandomUsers(
-    GetRandomUsersEvent event,
+  Future<void> _onFetchNextResultsPageEvent(
+    FetchNextResultsPageEvent event,
     Emitter<PaginatedListState> emit,
   ) async {
     emit(PaginatedListLoading());
-    final failureOrRandomUsers = await getRandomUsers(NoParams());
-    _eitherLoadedAfterGetRandomUsersOrErrorState(
-      failureOrRandomUsers,
+    final failureOrNextResultsPage =
+        await fetchNextResultsPage(Params(page: page));
+    await _eitherLoadedStateAfterFetchNextResultsPageOrErrorState(
+      failureOrNextResultsPage,
       emit,
     );
   }
