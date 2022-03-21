@@ -3,23 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:helios_q1/src/features/paginated_list/presentation/views/user_details_view.dart';
-
 import '../injection_container.dart';
-import 'features/paginated_list/presentation/bloc/paginated_list_bloc.dart';
 import 'features/paginated_list/presentation/views/user_list_view.dart';
-import 'features/settings/settings_controller.dart';
-import 'features/settings/settings_view.dart';
-import 'sample_feature/sample_item_details_view.dart';
-import 'sample_feature/sample_item_list_view.dart';
+import 'features/settings/presentation/bloc/settings_bloc.dart';
+import 'features/settings/presentation/views/settings_view.dart';
 
 /// The Widget that configures your application.
 class MyApp extends StatelessWidget {
   const MyApp({
     Key? key,
-    required this.settingsController,
   }) : super(key: key);
-
-  final SettingsController settingsController;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +20,13 @@ class MyApp extends StatelessWidget {
     //
     // The AnimatedBuilder Widget listens to the SettingsController for changes.
     // Whenever the user updates their settings, the MaterialApp is rebuilt.
-    return BlocProvider(
-      create: (_) => serviceLocator<PaginatedListBloc>(),
-      child: AnimatedBuilder(
-        animation: settingsController,
-        builder: (BuildContext context, Widget? child) {
+    return BlocProvider<SettingsBloc>(
+      create: (_) => serviceLocator<SettingsBloc>()
+        ..add(
+          const SettingsLoaded(),
+        ),
+      child: BlocBuilder<SettingsBloc, SettingsState>(
+        builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             // Providing a restorationScopeId allows the Navigator built by the
@@ -66,7 +61,8 @@ class MyApp extends StatelessWidget {
             // SettingsController to display the correct theme.
             theme: ThemeData(),
             darkTheme: ThemeData.dark(),
-            themeMode: settingsController.themeMode,
+
+            themeMode: state.themeMode,
 
             // Define a function to handle named routes in order to support
             // Flutter web url navigation and deep linking.
@@ -76,7 +72,7 @@ class MyApp extends StatelessWidget {
                 builder: (BuildContext context) {
                   switch (routeSettings.name) {
                     case SettingsView.routeName:
-                      return SettingsView(controller: settingsController);
+                      return const SettingsView();
                     case UserDetailsView.routeName:
                       return const UserDetailsView();
                     case UserListView.routeName:

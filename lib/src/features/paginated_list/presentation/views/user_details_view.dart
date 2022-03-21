@@ -9,7 +9,6 @@ class UserDetailsView extends StatelessWidget {
     final double width = MediaQuery.of(context).size.width;
     final Map<String, dynamic> user =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    print(user);
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Details'),
@@ -26,7 +25,7 @@ class UserDetailsView extends StatelessWidget {
                   height: 300,
                   width: width * 0.9,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(0),
                     boxShadow: [
                       BoxShadow(

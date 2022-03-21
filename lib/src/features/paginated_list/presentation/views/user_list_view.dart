@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:helios_q1/src/features/paginated_list/presentation/bloc/paginated_list_bloc.dart';
 import '../../../../../injection_container.dart';
-import '../../../settings/settings_view.dart';
+import '../../../settings/presentation/views/settings_view.dart';
 import '../components/components.dart';
 
-// TODO: Transformer settings en bloc architect
 // TODO: implémenter des tests
 class UserListView extends StatelessWidget {
   UserListView({Key? key}) : super(key: key);
@@ -13,7 +12,7 @@ class UserListView extends StatelessWidget {
   final _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<PaginatedListBloc>(
       create: (_) => serviceLocator<PaginatedListBloc>()
         ..add(const FetchNextResultsPageEvent()),
       child: BlocBuilder<PaginatedListBloc, PaginatedListState>(

@@ -23,7 +23,6 @@ class RandomUserCard extends StatelessWidget {
       subtitle: Text(user.email),
       trailing: const Icon(Icons.more_vert_outlined),
       onTap: () {
-        print(user);
         Navigator.restorablePushNamed(context, UserDetailsView.routeName,
             arguments: user.toMap());
       },
