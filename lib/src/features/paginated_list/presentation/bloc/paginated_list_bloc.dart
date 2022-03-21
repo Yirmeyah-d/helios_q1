@@ -21,6 +21,8 @@ class PaginatedListBloc extends Bloc<PaginatedListEvent, PaginatedListState> {
     required this.fetchNextResultsPage,
   }) : super(PaginatedListInitial()) {
     on<FetchNextResultsPageEvent>(_onFetchNextResultsPageEvent);
+    on<SearchResultsEvent>(_onSearchResultsEvent);
+    on<RefreshResultsEvent>(_onRefreshResultsEvent);
   }
 
   Future<void> _eitherLoadedStateAfterFetchNextResultsPageOrErrorState(
@@ -60,5 +62,24 @@ class PaginatedListBloc extends Bloc<PaginatedListEvent, PaginatedListState> {
       failureOrNextResultsPage,
       emit,
     );
+  }
+
+  Future<void> _onSearchResultsEvent(
+    SearchResultsEvent event,
+    Emitter<PaginatedListState> emit,
+  ) async {
+    emit(PaginatedListLoading());
+    final searchResults = resultsPage.where((results) =>
+        ("${results.name.firstName} ${results.name.lastName}")
+            .startsWith(event.query));
+    emit(PaginatedListLoaded(nextResultsPage: searchResults.toList()));
+  }
+
+  Future<void> _onRefreshResultsEvent(
+    RefreshResultsEvent event,
+    Emitter<PaginatedListState> emit,
+  ) async {
+    emit(PaginatedListLoading());
+    emit(PaginatedListLoaded(nextResultsPage: resultsPage));
   }
 }

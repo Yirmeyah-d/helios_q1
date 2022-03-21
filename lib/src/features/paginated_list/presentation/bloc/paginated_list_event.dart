@@ -10,3 +10,18 @@ class FetchNextResultsPageEvent extends PaginatedListEvent {
   @override
   List<Object> get props => [];
 }
+
+class SearchResultsEvent extends PaginatedListEvent {
+  final String query;
+  const SearchResultsEvent({required this.query});
+
+  @override
+  List<Object> get props => [query];
+}
+
+class RefreshResultsEvent extends PaginatedListEvent {
+  const RefreshResultsEvent();
+
+  @override
+  List<Object> get props => [];
+}

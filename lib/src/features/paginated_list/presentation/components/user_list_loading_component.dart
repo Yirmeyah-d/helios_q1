@@ -2,21 +2,29 @@ import 'package:flutter/material.dart';
 
 import 'package:shimmer/shimmer.dart';
 
+import 'components.dart';
+
 class UserListLoading extends StatelessWidget {
   const UserListLoading({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        loadingInputCard(),
-        loadingCard(),
-        loadingCard(),
-        loadingCard(),
-        loadingCard(),
-        loadingCard(),
-        loadingCard(),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+          title: SearchBar(
+        users: [],
+      )),
+      body: ListView(
+        children: <Widget>[
+          loadingInputCard(),
+          loadingCard(),
+          loadingCard(),
+          loadingCard(),
+          loadingCard(),
+          loadingCard(),
+          loadingCard(),
+        ],
+      ),
     );
   }
 
