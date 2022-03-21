@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:helios_q1/src/features/paginated_list/presentation/views/user_details_view.dart';
 
 import '../injection_container.dart';
 import 'features/paginated_list/presentation/bloc/paginated_list_bloc.dart';
@@ -76,6 +77,8 @@ class MyApp extends StatelessWidget {
                   switch (routeSettings.name) {
                     case SettingsView.routeName:
                       return SettingsView(controller: settingsController);
+                    case UserDetailsView.routeName:
+                      return const UserDetailsView();
                     case UserListView.routeName:
                     default:
                       return UserListView();

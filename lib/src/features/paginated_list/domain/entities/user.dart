@@ -30,4 +30,17 @@ class User extends Equatable {
         profilePicture,
         location,
       ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': "${name.firstName} ${name.lastName}",
+      'age': dob.age,
+      "email": email,
+      "phoneNumber": phoneNumber,
+      "profilePicture": profilePicture.urlPhotoMediumSize,
+      "city": location.city,
+      "street": "${location.street.number} ${location.street.name}",
+      "postCode": location.postCode,
+    };
+  }
 }

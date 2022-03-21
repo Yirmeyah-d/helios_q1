@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:helios_q1/src/core/network/network_info.dart';
+import 'package:helios_q1/src/features/paginated_list/presentation/views/user_details_view.dart';
 
+import '../../../../../injection_container.dart';
 import '../../domain/entities/user.dart';
 
 class RandomUserCard extends StatelessWidget {
@@ -8,26 +11,22 @@ class RandomUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(child: Text("Firstname: ${user.name.firstName}")),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(child: Text("Lastname: ${user.name.lastName}")),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(child: Text("Email: ${user.email}")),
-            ],
-          ),
-        ],
+    return ListTile(
+      leading: Image.network(
+        user.profilePicture.urlPhotoMediumSize,
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace? stackTrace) {
+          return const Icon(Icons.person);
+        },
       ),
+      title: Text("${user.name.firstName} ${user.name.lastName}"),
+      subtitle: Text(user.email),
+      trailing: const Icon(Icons.more_vert_outlined),
+      onTap: () {
+        print(user);
+        Navigator.restorablePushNamed(context, UserDetailsView.routeName,
+            arguments: user.toMap());
+      },
     );
   }
 }

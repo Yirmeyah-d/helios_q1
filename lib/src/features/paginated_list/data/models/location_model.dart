@@ -16,7 +16,7 @@ class LocationModel extends Location {
     return LocationModel(
       city: json["city"],
       street: StreetModel.fromJson(json["street"]),
-      postCode: json["postCode"].toString(),
+      postCode: json["postcode"].toString(),
     );
   }
 
@@ -24,7 +24,7 @@ class LocationModel extends Location {
     return {
       'city': city,
       'street': street,
-      'postCode': postCode,
+      'postcode': postCode,
     };
   }
 }
