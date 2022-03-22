@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:helios_q1/src/features/paginated_list/data/models/dob_model.dart';
 import 'package:helios_q1/src/features/paginated_list/data/models/location_model.dart';
@@ -25,7 +24,7 @@ void main() {
   );
 
   test(
-    'should be a subclass of Dob entity',
+    'should be a subclass of User entity',
     () async {
       // assert
       expect(tUserModel, isA<User>());
@@ -34,7 +33,7 @@ void main() {
 
   group('fromJson', () {
     test(
-      'should return a valid model when the JSON number is an integer',
+      'should return a valid model from the Json',
       () async {
         // arrange
         final Map<String, dynamic> jsonMap = json.decode(fixture('user.json'));
@@ -55,8 +54,8 @@ void main() {
 
         // assert
         final expectedMap = {
-          'name': NameModel(firstName: "Thomas", lastName: "Jefferson"),
-          'dob': DobModel(age: 46),
+          'name': const NameModel(firstName: "Thomas", lastName: "Jefferson"),
+          'dob': const DobModel(age: 46),
           'email': "thomas.jeff@gmail.com",
           'phoneNumber': "20302030203",
           'profilePicture':

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:helios_q1/src/features/paginated_list/data/data_sources/paginated_list_local_data_source.dart';
 import 'package:helios_q1/src/features/settings/data/data_sources/settings_local_data_source.dart';
 import 'package:helios_q1/src/features/settings/data/repositories/settings_repository_impl.dart';
 import 'package:mockito/annotations.dart';
@@ -18,7 +17,7 @@ void main() {
   group('updateThemeMode', () {
     const tThemeMode = ThemeMode.dark;
     test(
-      'should cache the data locally when the call to remote data source is successful',
+      'should cache the theme locally when the call to update the theme is made',
       () async {
         // arrange
         when(mockLocalDataSource.cacheThemeMode(tThemeMode))
@@ -34,7 +33,7 @@ void main() {
   group('loadThemeMode', () {
     const tThemeMode = ThemeMode.dark;
     test(
-      'should cache the data locally when the call to remote data source is successful',
+      'should return the theme locally when the call to load the theme is made',
       () async {
         // arrange
         when(mockLocalDataSource.getLastThemeMode())

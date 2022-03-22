@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:helios_q1/src/core/error/exceptions.dart';
 import 'package:helios_q1/src/features/paginated_list/data/data_sources/paginated_list_local_data_source.dart';
@@ -12,7 +11,6 @@ import 'package:helios_q1/src/features/paginated_list/data/models/user_model.dar
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../fixtures/fixture_reader.dart';
 import 'paginated_list_local_data_source_test.mocks.dart';
 
 @GenerateMocks([SharedPreferences])

@@ -2,21 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:helios_q1/src/core/error/exceptions.dart';
 import 'package:helios_q1/src/core/styles/themes.dart';
-import 'package:helios_q1/src/features/paginated_list/data/data_sources/paginated_list_local_data_source.dart';
-import 'package:helios_q1/src/features/paginated_list/data/models/dob_model.dart';
-import 'package:helios_q1/src/features/paginated_list/data/models/location_model.dart';
-import 'package:helios_q1/src/features/paginated_list/data/models/name_model.dart';
-import 'package:helios_q1/src/features/paginated_list/data/models/picture_model.dart';
-import 'package:helios_q1/src/features/paginated_list/data/models/street_model.dart';
-import 'package:helios_q1/src/features/paginated_list/data/models/user_model.dart';
 import 'package:helios_q1/src/features/settings/data/data_sources/settings_local_data_source.dart';
-import 'package:helios_q1/src/features/settings/data/repositories/settings_repository_impl.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../fixtures/fixture_reader.dart';
 import 'settings_local_data_source_test.mocks.dart';
 
 @GenerateMocks([SharedPreferences])
