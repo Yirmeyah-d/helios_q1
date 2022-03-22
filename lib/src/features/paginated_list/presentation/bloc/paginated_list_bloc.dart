@@ -45,6 +45,7 @@ class PaginatedListBloc extends Bloc<PaginatedListEvent, PaginatedListState> {
         emit(
           PaginatedListLoaded(
             nextResultsPage: resultsPage,
+            page: page,
           ),
         );
       },
@@ -72,7 +73,8 @@ class PaginatedListBloc extends Bloc<PaginatedListEvent, PaginatedListState> {
     final searchResults = resultsPage.where((results) =>
         ("${results.name.firstName} ${results.name.lastName}")
             .startsWith(event.query));
-    emit(PaginatedListLoaded(nextResultsPage: searchResults.toList()));
+    emit(PaginatedListLoaded(
+        nextResultsPage: searchResults.toList(), page: page));
   }
 
   Future<void> _onRefreshResultsEvent(
@@ -80,6 +82,6 @@ class PaginatedListBloc extends Bloc<PaginatedListEvent, PaginatedListState> {
     Emitter<PaginatedListState> emit,
   ) async {
     emit(PaginatedListLoading());
-    emit(PaginatedListLoaded(nextResultsPage: resultsPage));
+    emit(PaginatedListLoaded(nextResultsPage: resultsPage, page: page));
   }
 }

@@ -1,0 +1,46 @@
+[
+  {
+    "name": {
+      "firstName": "Thomas",
+      "lastName": "Jefferson"
+    },
+    "dob": {
+      "age": 46
+    },
+    "email": "thomas.jeff@gmail.com",
+    "phoneNumber": "20302030203",
+    "profilePicture": {
+      "urlPhotoMediumSize": "https:photo.png"
+    },
+    "location": {
+      "city": "Washington",
+      "street": {
+        "number": "23",
+        "name": "Burger st"
+      },
+      "postCode":"23832"
+    }
+  },
+  {
+    "name": {
+      "firstName": "Stephen",
+      "lastName": "Hawkins"
+    },
+    "dob": {
+      "age": 57
+    },
+    "email": "steph.hawk@gmail.com",
+    "phoneNumber": "20302044277",
+    "profilePicture": {
+      "urlPhotoMediumSize": "https:photo.jpg"
+    },
+    "location": {
+      "city": "New York",
+      "street": {
+        "number": "57",
+        "name": "Lincoln st"
+      },
+      "postcode":"74954"
+    }
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "name": {
+    "firstName": "Thomas",
+    "lastName": "Jefferson"
+  },
+  "dob": {
+    "age": 46
+  },
+  "email": "thomas.jeff@gmail.com",
+  "phoneNumber": "20302030203",
+  "profilePicture": {
+    "urlPhotoMediumSize": "https:photo.png"
+  },
+  "location": {
+    "city": "Washington",
+    "street": {
+      "number": "23",
+      "name": "Burger st"
+    },
+    "postcode":"23832"
+  }
+}
