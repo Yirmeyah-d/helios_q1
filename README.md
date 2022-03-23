@@ -24,6 +24,7 @@ Ce que nous allons évaluer :
 * Si le rendu respecte les spécifications
 * Architecture
 * Respect des best practices
+
 Bonus points :
 * Tests unitaires
 * Pre chargement des pages
